@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import mapImage from './img/map.svg';
 import './style.css';
 
-export const JourneyPicker = () => {
+export const JourneyPicker = ({onJourneyChange}) => {
   const [fromCity, setFromCity] = useState('');
   const [toCity, setToCity] = useState('');
   const [date, setDate] = useState('');
@@ -11,10 +11,12 @@ export const JourneyPicker = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log('Odesílám formulář s cestou');
-    console.log({ fromCity });
-    console.log({ toCity });
-    console.log({ date });
+    
+    fetch(
+      `https://leviexpress-backend.herokuapp.com/api/journey?fromCity=${fromCity}&toCity=${toCity}&date=${date}`,
+    )
+      .then((resp) => resp.json())
+      .then((json) => onJourneyChange(json.data));
   };
 
   useEffect(() => {
@@ -84,7 +86,11 @@ export const JourneyPicker = () => {
             </select>
           </label>
           <div className="journey-picker__controls">
-            <button className="btn" type="submit">
+            <button
+              className="btn"
+              type="submit"
+              disabled={date === '' || cities === ''}
+            >
               Vyhledat spoj
             </button>
           </div>
