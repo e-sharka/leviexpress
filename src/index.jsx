@@ -5,6 +5,7 @@ import { Footer } from './components/Footer';
 import { Header } from './components/Header';
 import { Home } from './components/Home';
 import { Reservation } from './components/Reservation';
+
 import './style.css';
 
 const App = () => {
@@ -15,7 +16,7 @@ const App = () => {
         <Route path="/reservation">
           <Reservation />
         </Route>
-        <Route path="/">
+        <Route path="/" >
           <Home />
         </Route>
       </Switch>
